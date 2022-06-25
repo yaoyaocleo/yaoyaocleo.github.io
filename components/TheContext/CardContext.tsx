@@ -1,17 +1,17 @@
-import { TheContext } from "./context";
+import { TheContextProvider } from "./context";
+import GetContext from "./GetContext";
+import SetContext from "./SetContext";
 
 const CardContext: React.FC = () => {
-    const getContext = () => {
-        console.log('getContext');
-    }
-
+    
     return (
-        <TheContext.Provider value={{user: null}}>
-            <div className='m-4 p-6 text-left text-inherit border-[1px] border-[#eaeaea] rounded-xl max-w-[300px] transition-colors ease-in-out delay-150 hover:text-[#0070f3] hover:border-[#0070f3]'>
+        <TheContextProvider>
+            <div className='flex flex-col gap-2 m-4 p-2 text-left text-inherit border-[1px] border-[#eaeaea] rounded-xl w-[300px] transition-colors ease-in-out delay-150 hover:text-[#0070f3] hover:border-[#0070f3]'>
                 <h1 className='text-2xl mb-4'>Context &rarr;</h1>
-                <button onClick={getContext} className='py-2 px-4 bg-yellow-300 rounded-md'>Get context</button>
+                <GetContext />
+                <SetContext />
             </div>
-        </TheContext.Provider>
+        </TheContextProvider>
     );
 }
 
