@@ -1,9 +1,21 @@
-import { Flex, Heading, IconButton, Menu, MenuButton, MenuItem, MenuList, Switch, Text, VStack } from '@chakra-ui/react';
+import { Flex, Heading, IconButton, Menu, MenuButton, MenuItem, MenuList, Switch, Text, useColorMode, VStack } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Card from '../components/Card';
-import { TbToggleLeft, TbToggleRight, TbZodiacTaurus } from 'react-icons/tb';
+import { TbToggleLeft, TbToggleRight, TbBeach, TbSun, TbMoon } from 'react-icons/tb';
+import ColorMode from '../components/ColorMode';
+import { GlobalContext } from '../contexts/GlobalContext'; 
+import { useContext } from 'react';
+
 const Home: NextPage = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const context = useContext(GlobalContext);
+
+  const handleColorMode = () => {
+    toggleColorMode();
+    context?.setColorMode(context.colorMode === 'dark' ? 'light' : 'dark');
+  }
+
   return (
     <div>
       <Head>
@@ -16,12 +28,13 @@ const Home: NextPage = () => {
         <Menu>
           <MenuButton
             as={IconButton}
-            aria-label='Options'
-            icon={<TbZodiacTaurus />}
+            aria-label='Right Menu'
+            icon={<TbBeach />}
           />
           <MenuList>
-            <MenuItem icon={<TbToggleRight />}>
+            <MenuItem icon={colorMode === 'dark' ? <TbToggleRight /> : <TbToggleLeft />} onClick={handleColorMode}>
               <Text pb={1}>Toggle Color Mode</Text>
+              {/* <TbSun /><TbMoon /> */}
             </MenuItem>
           </MenuList>
         </Menu>
@@ -31,6 +44,7 @@ const Home: NextPage = () => {
         <Heading noOfLines={1}>
           a Home of Cleo
         </Heading>
+        <ColorMode />
         <Card>
           <h2 className='text-2xl mb-4'>Go dark &rarr;</h2>
           <Flex alignItems='center' gap='2'>

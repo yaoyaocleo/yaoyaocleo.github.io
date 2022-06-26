@@ -1,26 +1,24 @@
+//https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
+
 import React, { useState } from "react";
 
-// type GlobalContextType = {
-//     theme: string | null,
-//     setTheme: (theme: string) => void
-// }
-
-const GlobalContext = React.createContext({});
-
-type GlobalContextProviderType = {
-    children: React.ReactNode
+type GlobalContextType = {
+    colorMode: string,
+    setColorMode: (mode: string) => void
 }
+const GlobalContext = React.createContext<GlobalContextType | null>(null);
 
-const GlobalContextProvider = ({children}: GlobalContextProviderType) => {
-    const [globalTheme, setGlobalTheme] = useState('');
+const GlobalContextProvider = ({children}: {children: React.ReactNode}) => {
+    const [color, setColor] = useState('dark');
 
-    const setTheme = (theme: string) => {
-        console.log(`theme = ${theme}`);
-        setGlobalTheme(theme);
-    }
+    console.log('GlobalContextProvider called');
+    
+    const setColorMode = (mode: string) => {
+        setColor(mode);
+    } 
 
     return (
-        <GlobalContext.Provider value={{ theme: globalTheme, setTheme }}>
+        <GlobalContext.Provider value={{ colorMode: color, setColorMode }}>
             {children}
         </GlobalContext.Provider>
     );
